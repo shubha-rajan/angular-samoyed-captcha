@@ -1,11 +1,8 @@
-<div class="captcha-grid">
-    <app-captcha-tile imageUrl="https://jubilee-live.flickr.com/65535/47983449098_054887605b_b.jpg" jamie=false alice = true></app-captcha-tile>
-    <app-captcha-tile imageUrl="https://jubilee-live.flickr.com/65535/47983449098_054887605b_b.jpg" jamie=false alice = true></app-captcha-tile>
-    <app-captcha-tile imageUrl="https://jubilee-live.flickr.com/65535/47983449098_054887605b_b.jpg" jamie=false alice = true></app-captcha-tile>
-    <app-captcha-tile imageUrl="https://jubilee-live.flickr.com/65535/47983449098_054887605b_b.jpg" jamie=false alice = true></app-captcha-tile>
-    <app-captcha-tile imageUrl="https://jubilee-live.flickr.com/65535/47983449098_054887605b_b.jpg" jamie=false alice = true></app-captcha-tile>
-    <app-captcha-tile imageUrl="https://jubilee-live.flickr.com/65535/47983449098_054887605b_b.jpg" jamie=false alice = true></app-captcha-tile>
-    <app-captcha-tile imageUrl="https://jubilee-live.flickr.com/65535/47983449098_054887605b_b.jpg" jamie=false alice = true></app-captcha-tile>
-    <app-captcha-tile imageUrl="https://jubilee-live.flickr.com/65535/47983449098_054887605b_b.jpg" jamie=false alice = true></app-captcha-tile>
-    <app-captcha-tile imageUrl="https://jubilee-live.flickr.com/65535/47983449098_054887605b_b.jpg" jamie=false alice = true></app-captcha-tile>
+<div class="captcha-grid" >
+    <app-captcha-tile 
+        *ngFor='let doggo of doggos'
+        imageUrl={{doggo.url}} 
+        match={{doggo.match}} 
+        targetDog={{captchaData.targetDog}} 
+        label={{doggo.label}}></app-captcha-tile>
 </div>
