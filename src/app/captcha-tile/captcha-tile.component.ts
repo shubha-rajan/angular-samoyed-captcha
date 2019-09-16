@@ -12,4 +12,13 @@ export class CaptchaTileComponent implements OnInit {
   ngOnInit() {
   }
 
+  selected = false;
+  className = "not-selected";
+
+  toggleSelected() {
+    this.selected = !this.selected;
+    this.className = this.selected ? "selected" : "not-selected"
+  }
+
+
 }
