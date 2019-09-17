@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CaptchaGridService, CaptchaData } from './captcha-grid.service';
+import { ChildActivationStart } from '@angular/router';
 @Component({
   selector: 'app-captcha-grid',
   templateUrl: './captcha-grid.component.html',
@@ -13,6 +14,7 @@ export class CaptchaGridComponent implements OnInit {
   doggos = [];
   score;
   guesses = {};
+  gameComplete : boolean;
 
   constructor(private captchaGridService: CaptchaGridService ){}
   
@@ -27,14 +29,12 @@ export class CaptchaGridComponent implements OnInit {
      };
      this.generateTiles();
      this.setScore();
-     console.log(this.guesses);
+     this.gameComplete = false;
      });
   }
 
   public guessCallback(label) {
-    console.log(this.guesses);
     this.guesses[label] = !this.guesses[label];
-    console.log(this.guesses);
     this.setScore();
 
   }
@@ -50,6 +50,10 @@ export class CaptchaGridComponent implements OnInit {
     const score = Object.values(this.guesses).reduce(reducer, 0);
     this.score = score;
     
+  }
+
+  finishGame() {
+    this.gameComplete = true;
   }
 
   generateTiles() {

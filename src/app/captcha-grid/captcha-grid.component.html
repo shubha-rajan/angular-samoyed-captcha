@@ -1,7 +1,8 @@
 Select all the photos that contain {{captchaData.targetDog}}
-<div class="score">
+<div *ngIf="gameComplete === true" class="score">
     Score: {{score}}
 </div>
+<button (click)="finishGame()">Submit</button>
 <div class="captcha-grid" >
     <app-captcha-tile 
         *ngFor='let doggo of doggos'
@@ -9,5 +10,6 @@ Select all the photos that contain {{captchaData.targetDog}}
         match={{doggo.match}} 
         label={{doggo.label}}
         [updateScoreCallback]="guessCallback.bind(this)"
+        gameComplete={{gameComplete}}
         ></app-captcha-tile>
 </div>
