@@ -21,7 +21,7 @@ export class CaptchaGridComponent implements OnInit {
     this.captchaGridService.getData()
     .subscribe(data => {
       this.captchaData = {
-        targetDog: (data as any).identify,
+        targetDog: (data as any).identify[0].toUpperCase() + (data as any).identify.substr(1),
         captchaID:  (data as any).captcha_id,
         dogs: {...data}
      };
