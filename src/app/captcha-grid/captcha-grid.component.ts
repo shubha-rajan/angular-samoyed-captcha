@@ -11,21 +11,44 @@ export class CaptchaGridComponent implements OnInit {
 
   captchaData: CaptchaData;
   doggos = [];
-  
+  score;
+  guesses = {};
+
   constructor(private captchaGridService: CaptchaGridService ){}
   
  
   ngOnInit() {
     this.captchaGridService.getData()
     .subscribe(data => {
-      console.log(data);
       this.captchaData = {
         targetDog: (data as any).identify,
         captchaID:  (data as any).captcha_id,
         dogs: {...data}
      };
      this.generateTiles();
+     this.setScore();
+     console.log(this.guesses);
      });
+  }
+
+  public guessCallback(label) {
+    console.log(this.guesses);
+    this.guesses[label] = !this.guesses[label];
+    console.log(this.guesses);
+    this.setScore();
+
+  }
+
+  setScore () {
+    const reducer = (total, currentValue) => {
+      if (currentValue) {
+        return total + 1;
+      } else {
+        return total;
+      }
+    };
+    const score = Object.values(this.guesses).reduce(reducer, 0);
+    this.score = score;
     
   }
 
@@ -33,6 +56,11 @@ export class CaptchaGridComponent implements OnInit {
     const labels = ["image1", "image2", "image3", "image4", "image5", "image6", "image7", "image8", "image9"]
     for (let label of labels) {
       const doggo = this.captchaData.dogs[label];
+      if (doggo.match) {
+        this.guesses[label] = false;
+      } else {
+        this.guesses[label] = true;
+      }
       this.doggos.push(
         {...doggo, 'label': label}
       )

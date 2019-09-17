@@ -9,27 +9,22 @@ export class CaptchaTileComponent implements OnInit {
   @Input() imageUrl: string;
   @Input() label: string
   @Input() match: boolean;
+  @Input() updateScoreCallback: Function;
   @Input() targetDog: string;
   ngOnInit() {
-    this.setGuessedCorrect();
   }
 
   selected = false;
   className = "not-selected";
-  guessedCorrect = null;
+
 
   toggleSelected() {
     this.selected = !this.selected;
     this.className = this.selected ? "selected" : "not-selected";
-    this.guessedCorrect = !this.guessedCorrect
+    this.updateScoreCallback(this.label)
+    
   }
 
-  setGuessedCorrect() {
-    if (this.match){
-      this.guessedCorrect = false;
-    } else {
-      this.guessedCorrect = true;
-    }
-  }
+
 
 }

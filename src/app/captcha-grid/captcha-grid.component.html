@@ -1,8 +1,13 @@
+Select all the photos that contain {{captchaData.targetDog}}
+<div class="score">
+    Score: {{score}}
+</div>
 <div class="captcha-grid" >
     <app-captcha-tile 
         *ngFor='let doggo of doggos'
         imageUrl={{doggo.url}} 
         match={{doggo.match}} 
-        targetDog={{captchaData.targetDog}} 
-        label={{doggo.label}}></app-captcha-tile>
+        label={{doggo.label}}
+        [updateScoreCallback]="guessCallback.bind(this)"
+        ></app-captcha-tile>
 </div>
