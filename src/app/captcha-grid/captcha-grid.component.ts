@@ -40,6 +40,11 @@ export class CaptchaGridComponent implements OnInit {
 
   }
 
+  resetGame() {
+    this.doggos = []
+    this.ngOnInit();
+  }
+
   setScore () {
     const reducer = (total, currentValue) => {
       if (currentValue) {

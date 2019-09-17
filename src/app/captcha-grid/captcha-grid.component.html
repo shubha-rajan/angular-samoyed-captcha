@@ -9,7 +9,7 @@
         [gameComplete]="gameComplete"
         ></app-captcha-tile>
     <button *ngIf="gameComplete === false" (click)="finishGame()" layout-align="center">Submit</button>
-    <button *ngIf="gameComplete === true" layout-align="center">Play Again</button>
+    <button *ngIf="gameComplete === true" (click)="resetGame()" layout-align="center">Play Again</button>
     <div *ngIf="gameComplete === true" class="score">
         Your score: {{score}}
     </div>
