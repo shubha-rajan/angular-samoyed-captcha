@@ -3,10 +3,10 @@
     <app-captcha-tile 
         *ngFor='let doggo of doggos'
         imageUrl={{doggo.url}} 
-        match={{doggo.match}} 
+        [match]="doggo.match" 
         label={{doggo.label}}
         [updateScoreCallback]="guessCallback.bind(this)"
-        gameComplete={{gameComplete}}
+        [gameComplete]="gameComplete"
         ></app-captcha-tile>
     <button (click)="finishGame()" layout-align="center">Submit</button>
     <div *ngIf="gameComplete === true" class="score">
