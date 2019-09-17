@@ -1,19 +1,24 @@
-<header>
-  <h1>Samoyed Captcha</h1>
-  <nav>
-    <ul>
-      <li>
-        <a href="#">Game</a>
-      </li>
-      <li>
-          <a href="#">About</a>
-      </li>
-    </ul>
-  </nav>
-</header>
-<main>
-<app-captcha-grid></app-captcha-grid>
-</main>
+<div>
+    <header>
+        <h1 class="title">Samoyed Captcha!</h1>
+      </header>
+      <main>
+      <article>
+          <h2>Meet Alice and Jamie.</h2>
+          <p>
+            Can you tell these two apart? The machine learning model we trained with <a href="https://cloud.google.com/automl">Google Cloud AutoML</a> can!
+            Alice and Jamie's entire lives have been documented on camera by their dad, Doug. That's over 10 years worth of data that we were able to use to teach
+            our model to tell these two apart! Our model was ultimately able to guess which dog is which with over 80% accuracy. Think you can do better? Try our 
+            captcha game below!
+          </p>
+          <img src="assets/images/AliceJamie.jpg">
+
+      </article>
+        
+      <app-captcha-grid></app-captcha-grid>
+      </main>
+</div>
+
   
 
 <router-outlet></router-outlet>

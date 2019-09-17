@@ -14,13 +14,6 @@ export class CaptchaTileComponent implements OnChanges{
 
 
   ngOnChanges(){
-    if (this.gameComplete == true){
-      if ((this.selected == true && this.match == true)|| (this.selected == false && this.match == false)) {
-        this.className = "correct";
-      } else {
-        this.className = "incorrect";
-      }
-    }
   }
   selected = false;
   className = "not-selected";
