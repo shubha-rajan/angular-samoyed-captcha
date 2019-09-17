@@ -1,4 +1,4 @@
-<div class="captcha-grid" >
+<div *ngIf="loadingComplete === true" class="captcha-grid" >
     <p>Select all the photos that contain {{captchaData.targetDog}}.</p>
     <app-captcha-tile 
         *ngFor='let doggo of doggos'
@@ -8,8 +8,12 @@
         [updateScoreCallback]="guessCallback.bind(this)"
         gameComplete={{gameComplete}}
         ></app-captcha-tile>
-<button (click)="finishGame()" layout-align="center">Submit</button>
-<div *ngIf="gameComplete === true" class="score">
+    <button (click)="finishGame()" layout-align="center">Submit</button>
+    <div *ngIf="gameComplete === true" class="score">
         Your score: {{score}}
     </div>
+</div>
+<div *ngIf="!loadingComplete" class="loading">
+    <h4> Loading your captcha. Meanwhile enjoy this gif!</h4>
+    <img src="https://thumbs.gfycat.com/SolidHiddenAmericancrow-size_restricted.gif">
 </div>

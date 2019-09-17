@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { CaptchaGridService, CaptchaData } from './captcha-grid.service';
-import { ChildActivationStart } from '@angular/router';
 @Component({
   selector: 'app-captcha-grid',
   templateUrl: './captcha-grid.component.html',
@@ -15,6 +14,7 @@ export class CaptchaGridComponent implements OnInit {
   score;
   guesses = {};
   gameComplete : boolean;
+  loadingComplete = false;
 
   constructor(private captchaGridService: CaptchaGridService ){}
   
@@ -30,6 +30,7 @@ export class CaptchaGridComponent implements OnInit {
      this.generateTiles();
      this.setScore();
      this.gameComplete = false;
+     this.loadingComplete = true;
      });
   }
 
