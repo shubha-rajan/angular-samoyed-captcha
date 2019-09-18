@@ -34,14 +34,14 @@ export class CaptchaGridComponent implements OnInit {
      });
   }
 
-  public guessCallback(label) {
+  public guessCallback(label: string) {
     this.guesses[label] = !this.guesses[label];
     this.setScore();
 
   }
 
   resetGame() {
-    this.doggos = []
+    this.doggos = [];
     this.ngOnInit();
   }
 
