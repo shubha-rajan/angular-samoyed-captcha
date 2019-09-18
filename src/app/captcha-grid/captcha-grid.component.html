@@ -1,4 +1,4 @@
-<div *ngIf="loadingComplete === true" class="captcha-grid" >
+<section *ngIf="loadingComplete === true" class="captcha-grid" >
     <p>Select all the photos that contain {{captchaData.targetDog}}.</p>
     <app-captcha-tile 
         *ngFor='let doggo of doggos'
@@ -10,11 +10,25 @@
         ></app-captcha-tile>
     <button *ngIf="gameComplete === false" (click)="finishGame()" layout-align="center">Submit</button>
     <button *ngIf="gameComplete === true" (click)="resetGame()" layout-align="center">Play Again</button>
-    <div *ngIf="gameComplete === true" class="score">
-        Your score: {{score}}
+    <div *ngIf="gameComplete === true">
+        <p class="score">Your score: {{score}} out of 9</p>
+        <div class="confusion-grid">
+            <p class="guess">Your guess:</p>
+            <p class="actual">Actual:</p>
+            <p class="guess-target">{{captchaData.targetDog}}</p>
+            <p class="guess-other">{{otherDog()}}</p>
+            <p class="actual-target">{{captchaData.targetDog}}</p>
+            <p class="actual-other">{{otherDog()}}</p>
+            <div class="confusion-matrix">
+                <div class = "correct">{{confusionMatrix.truePos}}</div>
+                <div class = "incorrect">{{confusionMatrix.falsePos}}</div>
+                <div class = "incorrect">{{confusionMatrix.falseNeg}}</div>
+                <div class = "correct">{{confusionMatrix.trueNeg}}</div>
+            </div>
+        </div>
     </div>
-</div>
-<div *ngIf="!loadingComplete" class="loading">
+</section>
+<section *ngIf="!loadingComplete" class="loading">
     <h4> Loading your captcha.</h4>
     <img class="loading-circle" src="assets/images/loading.gif">
-</div>
+</section>

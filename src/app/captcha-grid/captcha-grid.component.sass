@@ -8,6 +8,43 @@
 h4, p, button, .score
   font-family:"Montserrat"
 
+.confusion-grid
+    display: grid
+    .actual
+        display: inline-block
+        margin-right: 10px
+        grid-row: 3/5
+        grid-column: 1
+    .guess
+        grid-row: 1
+        grid-column: 3/5
+    .guess-target
+        grid-row: 2/3
+        grid-column: 3/4
+    .guess-other
+        grid-row: 2/3
+        grid-column: 4/5
+    .actual-target
+        grid-row: 3/4
+        grid-column: 2/3
+    .actual-other
+        grid-row: 4/5
+        grid-column: 2/3
+.confusion-matrix  
+    grid-row: 3/5
+    grid-column: 3/5
+    display:inline-block
+    div
+        display: inline-block
+        width: 40%
+        padding: 5%
+
+.incorrect
+    background-color: yellow
+
+.correct
+    background-color: lightblue
+
 .loading
     margin: auto
     text-align: center

@@ -15,6 +15,13 @@ export class CaptchaGridComponent implements OnInit {
   guesses = {};
   gameComplete : boolean;
   loadingComplete = false;
+  confusionMatrix = {
+    truePos: null,
+    falsePos: null,
+    trueNeg: null,
+    falseNeg: null,
+  };
+
 
   constructor(private captchaGridService: CaptchaGridService ){}
   
@@ -58,8 +65,50 @@ export class CaptchaGridComponent implements OnInit {
     
   }
 
+  otherDog() {
+    if (this.captchaData.targetDog === 'Jamie') {
+      return 'Alice';
+    } else {
+      return 'Jamie';
+    }
+  }
+
   finishGame() {
+    const countFalseNeg = (total, doggo) => {
+      if (!this.guesses[doggo.label] && doggo.match) {
+        return total + 1;
+      } else {
+        return total;
+      }
+    };
+    const countTrueNeg = (total, doggo) => {
+      if (this.guesses[doggo.label] && !doggo.match) {
+        return total + 1;
+      } else {
+        return total;
+      }
+    };
+    const countFalsePos = (total, doggo) => {
+      if (!this.guesses[doggo.label] && !doggo.match) {
+        return total + 1;
+      } else {
+        return total;
+      }
+    };
+
+    const countTruePos = (total, doggo) => {
+      if (this.guesses[doggo.label] && doggo.match) {
+        return total + 1;
+      } else {
+        return total;
+      }
+    };
+
     this.gameComplete = true;
+    this.confusionMatrix.truePos = this.doggos.reduce(countTruePos, 0);
+    this.confusionMatrix.trueNeg = this.doggos.reduce(countTrueNeg, 0);
+    this.confusionMatrix.falsePos = this.doggos.reduce(countFalsePos, 0);
+    this.confusionMatrix.falseNeg = this.doggos.reduce(countFalseNeg, 0);
   }
 
   generateTiles() {
