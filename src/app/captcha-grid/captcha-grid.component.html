@@ -20,10 +20,10 @@
             <p class="actual-target">{{captchaData.targetDog}}</p>
             <p class="actual-other">{{otherDog()}}</p>
             <div class="confusion-matrix">
-                <div class = "correct">{{confusionMatrix.truePos}}</div>
-                <div class = "incorrect">{{confusionMatrix.falsePos}}</div>
-                <div class = "incorrect">{{confusionMatrix.falseNeg}}</div>
-                <div class = "correct">{{confusionMatrix.trueNeg}}</div>
+                <div class = "correct">{{confusionMatrix.truePos}} ({{getPercentage(confusionMatrix.truePos,matchCount())}}%)</div>
+                <div class = "incorrect">{{confusionMatrix.falsePos}} ({{getPercentage(confusionMatrix.falsePos,9 - matchCount())}}%)</div>
+                <div class = "incorrect">{{confusionMatrix.falseNeg}} ({{getPercentage(confusionMatrix.falseNeg, matchCount())}}%)</div>
+                <div class = "correct">{{confusionMatrix.trueNeg}} ({{getPercentage(confusionMatrix.trueNeg, 9 - matchCount())}}%)</div>
             </div>
         </div>
     </div>

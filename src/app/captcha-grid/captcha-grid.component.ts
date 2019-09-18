@@ -73,6 +73,21 @@ export class CaptchaGridComponent implements OnInit {
     }
   }
 
+  matchCount() {
+    const countMatches = (total, doggo) => {
+      if (doggo.match) {
+        return total + 1;
+      } else {
+        return total;
+      }
+    };
+
+    return this.doggos.reduce(countMatches, 0);
+  }
+
+  getPercentage(count, total) {
+    return Math.round(count/total * 100)
+  }
   finishGame() {
     const countFalseNeg = (total, doggo) => {
       if (!this.guesses[doggo.label] && doggo.match) {
