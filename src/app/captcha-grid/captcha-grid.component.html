@@ -10,8 +10,11 @@
         ></app-captcha-tile>
     <button *ngIf="gameComplete === false" (click)="finishGame()" layout-align="center">Submit</button>
     <button *ngIf="gameComplete === true" (click)="resetGame()" layout-align="center">Play Again</button>
+    
     <div *ngIf="gameComplete === true">
         <p class="score">Your score: {{score}} out of 9</p>
+        <h2 ngHide="!predictionsComplete">Compare yourself to our model: </h2>
+        <h4>Your confusion matrix:</h4>
         <div class="confusion-grid">
             <p class="guess">Your guess:</p>
             <p class="actual">Actual:</p>
@@ -26,7 +29,18 @@
                 <div class = "correct">{{confusionMatrix.trueNeg}} ({{getPercentage(confusionMatrix.trueNeg, 9 - matchCount())}}%)</div>
             </div>
         </div>
+        <h4>Model confusion matrix:</h4>
     </div>
+    
+    <div *ngIf="predictionsComplete === true" class = "model-predictions">
+        <h4>Compare your gueses:</h4>
+        <app-image-result *ngFor="let prediction of predictions"
+            imageUrl = "{{prediction.url}}"
+            [jamie] = "prediction.jamie"
+            [alice] = "prediction.alice"
+        ></app-image-result>
+    </div>
+
 </section>
 <section *ngIf="!loadingComplete" class="loading">
     <h4> Loading your captcha.</h4>

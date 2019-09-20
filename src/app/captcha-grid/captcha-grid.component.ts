@@ -21,6 +21,8 @@ export class CaptchaGridComponent implements OnInit {
     trueNeg: null,
     falseNeg: null,
   };
+  predictionsComplete: boolean;
+  predictions = [];
 
 
   constructor(private captchaGridService: CaptchaGridService ){}
@@ -30,14 +32,15 @@ export class CaptchaGridComponent implements OnInit {
     this.captchaGridService.getData()
     .subscribe(data => {
       this.captchaData = {
-        targetDog: (data as any).identify[0].toUpperCase() + (data as any).identify.substr(1),
+        targetDog: (data as any).label[0].toUpperCase() + (data as any).label.substr(1),
         captchaID:  (data as any).captcha_id,
         dogs: {...data}
      };
      this.generateTiles();
+     this.loadingComplete = true;
      this.setScore();
      this.gameComplete = false;
-     this.loadingComplete = true;
+     this.predictionsComplete = false;
      });
   }
 
@@ -49,6 +52,7 @@ export class CaptchaGridComponent implements OnInit {
 
   resetGame() {
     this.doggos = [];
+    this.loadingComplete = false
     this.ngOnInit();
   }
 
@@ -88,7 +92,27 @@ export class CaptchaGridComponent implements OnInit {
   getPercentage(count, total) {
     return Math.round(count/total * 100)
   }
+
+  getPredictions(){
+    for (let doggo of this.doggos){
+      this.captchaGridService.predict(doggo.url)
+        .subscribe(data => {
+        this.predictions.push(data);          
+      })
+    }
+    this.predictionsComplete = true;
+  }
+
+
+  sendResults(){
+    this.captchaGridService.sendResults(
+      this.guesses, this.captchaData.captchaID)
+      .subscribe(data => {
+        console.log(data);
+      });
+  }
   finishGame() {
+    this.sendResults();
     const countFalseNeg = (total, doggo) => {
       if (!this.guesses[doggo.label] && doggo.match) {
         return total + 1;
@@ -96,6 +120,7 @@ export class CaptchaGridComponent implements OnInit {
         return total;
       }
     };
+
     const countTrueNeg = (total, doggo) => {
       if (this.guesses[doggo.label] && !doggo.match) {
         return total + 1;
@@ -103,6 +128,7 @@ export class CaptchaGridComponent implements OnInit {
         return total;
       }
     };
+
     const countFalsePos = (total, doggo) => {
       if (!this.guesses[doggo.label] && !doggo.match) {
         return total + 1;
@@ -124,6 +150,8 @@ export class CaptchaGridComponent implements OnInit {
     this.confusionMatrix.trueNeg = this.doggos.reduce(countTrueNeg, 0);
     this.confusionMatrix.falsePos = this.doggos.reduce(countFalsePos, 0);
     this.confusionMatrix.falseNeg = this.doggos.reduce(countFalseNeg, 0);
+    
+    this.getPredictions();
   }
 
   generateTiles() {

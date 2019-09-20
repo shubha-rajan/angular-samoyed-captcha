@@ -1,13 +1,25 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable()
 export class CaptchaGridService {
   constructor(private http: HttpClient) { }
-  dataUrl = 'https://jamie-alice-classifier-251416.appspot.com/';
+  dataUrl = 'http://localhost:5000/';
 
     getData() {
-    return this.http.get(this.dataUrl);
+    return this.http.get(this.dataUrl + "");
+    }
+
+    sendResults(results: Object, captchaID: string) {
+      const body = results;
+      const headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
+      return this.http.post<Object>(this.dataUrl + "response/" + captchaID,  body, {headers: headers});
+    }
+
+    predict(url: string) {
+      const body = {'url': url};
+      const headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
+      return this.http.post<Object>(this.dataUrl + "predict", body, {headers: headers});
     }
 }
 
@@ -16,3 +28,4 @@ export interface CaptchaData {
     targetDog: string;
     dogs: object;
   }
+
