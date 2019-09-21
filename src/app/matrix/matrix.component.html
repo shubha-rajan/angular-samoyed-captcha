@@ -1,0 +1,14 @@
+<div class="confusion-grid">
+        <p class="guess">Your guess:</p>
+        <p class="actual">Actual:</p>
+        <p class="guess-target">{{targetDog}}</p>
+        <p class="guess-other">{{otherDog}}</p>
+        <p class="actual-target">{{targetDog}}</p>
+        <p class="actual-other">{{otherDog}}</p>
+        <div class="confusion-matrix">
+            <div class = "correct">{{matrix.truePos}} ({{getPercentage(matrix.truePos, matrix.matchTotal)}}%)</div>
+            <div class = "incorrect">{{matrix.falsePos}} ({{getPercentage(matrix.falsePos, matrix.nonMatchTotal)}}%)</div>
+            <div class = "incorrect">{{matrix.falseNeg}} ({{getPercentage(matrix.falseNeg, matrix.matchTotal)}}%)</div>
+            <div class = "correct">{{matrix.trueNeg}} ({{getPercentage(matrix.trueNeg, matrix.nonMatchTotal)}}%)</div>
+        </div>
+    </div>

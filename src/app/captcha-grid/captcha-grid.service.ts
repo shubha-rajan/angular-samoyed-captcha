@@ -10,6 +10,10 @@ export class CaptchaGridService {
     return this.http.get(this.dataUrl + "");
     }
 
+    getMatrix() {
+      return this.http.get(this.dataUrl + "matrix")
+    }
+
     sendResults(results: Object, captchaID: string) {
       const body = results;
       const headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
@@ -29,3 +33,11 @@ export interface CaptchaData {
     dogs: object;
   }
 
+export interface Matrix {
+  truePos: number;
+  falsePos: number;
+  trueNeg: number;
+  falseNeg: number;
+  matchTotal: number;
+  nonMatchTotal:number;
+}

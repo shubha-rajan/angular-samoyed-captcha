@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { CaptchaGridService, CaptchaData } from './captcha-grid.service';
+import { CaptchaGridService, CaptchaData, Matrix } from './captcha-grid.service';
+import { match } from 'minimatch';
 @Component({
   selector: 'app-captcha-grid',
   templateUrl: './captcha-grid.component.html',
@@ -10,17 +11,14 @@ import { CaptchaGridService, CaptchaData } from './captcha-grid.service';
 export class CaptchaGridComponent implements OnInit {
 
   captchaData: CaptchaData;
+  modelMatrix: Matrix;
+  loadedModelMatrix: boolean;
   doggos = [];
   score;
   guesses = {};
   gameComplete : boolean;
   loadingComplete = false;
-  confusionMatrix = {
-    truePos: null,
-    falsePos: null,
-    trueNeg: null,
-    falseNeg: null,
-  };
+  confusionMatrix: Matrix;
   predictionsComplete: boolean;
   predictions = [];
 
@@ -41,6 +39,7 @@ export class CaptchaGridComponent implements OnInit {
      this.setScore();
      this.gameComplete = false;
      this.predictionsComplete = false;
+     this.loadedModelMatrix = false;
      });
   }
 
@@ -52,6 +51,7 @@ export class CaptchaGridComponent implements OnInit {
 
   resetGame() {
     this.doggos = [];
+    this.predictions = [];
     this.loadingComplete = false
     this.ngOnInit();
   }
@@ -89,30 +89,59 @@ export class CaptchaGridComponent implements OnInit {
     return this.doggos.reduce(countMatches, 0);
   }
 
-  getPercentage(count, total) {
-    return Math.round(count/total * 100)
-  }
-
   getPredictions(){
     for (let doggo of this.doggos){
       this.captchaGridService.predict(doggo.url)
         .subscribe(data => {
-        this.predictions.push(data);          
+        let prediction = data;
+        let guess: string;
+        if ((this.guesses[doggo.label] && doggo.match) || (!this.guesses[doggo.label] && !doggo.match)){
+          guess = this.captchaData.targetDog;
+        } else {
+          guess = this.otherDog();
+        }
+        prediction['guess'] = guess;
+        prediction['actual'] = doggo.match ? this.captchaData.targetDog : this.otherDog();
+        this.predictions.push(prediction);          
       })
     }
     this.predictionsComplete = true;
   }
 
+  getModelMatrix(){
+    this.captchaGridService.getMatrix()
+      .subscribe(data => {     
+          this.modelMatrix = {
+            truePos: data[this.captchaData.targetDog.toLowerCase()].correct,
+            trueNeg: data[this.otherDog().toLowerCase()].correct,
+            falsePos: data[this.captchaData.targetDog.toLowerCase()].incorrect,
+            falseNeg: data[this.otherDog().toLowerCase()].incorrect,
+            matchTotal: (data[this.captchaData.targetDog.toLowerCase()].correct 
+              + data[this.otherDog().toLowerCase()].incorrect),
+            nonMatchTotal: (data[this.otherDog().toLowerCase()].correct 
+              + data[this.captchaData.targetDog.toLowerCase()].incorrect)
+          };
+          this.loadedModelMatrix = true;
+      });
+      
+      
+  }
 
   sendResults(){
     this.captchaGridService.sendResults(
-      this.guesses, this.captchaData.captchaID)
-      .subscribe(data => {
-        console.log(data);
-      });
+      this.guesses, this.captchaData.captchaID);
   }
+
   finishGame() {
     this.sendResults();
+    this.gameComplete = true;
+
+    this.setConfusionMatrix();
+    this.getModelMatrix();
+    this.getPredictions();
+  }
+  
+  setConfusionMatrix() {
     const countFalseNeg = (total, doggo) => {
       if (!this.guesses[doggo.label] && doggo.match) {
         return total + 1;
@@ -145,13 +174,15 @@ export class CaptchaGridComponent implements OnInit {
       }
     };
 
-    this.gameComplete = true;
-    this.confusionMatrix.truePos = this.doggos.reduce(countTruePos, 0);
-    this.confusionMatrix.trueNeg = this.doggos.reduce(countTrueNeg, 0);
-    this.confusionMatrix.falsePos = this.doggos.reduce(countFalsePos, 0);
-    this.confusionMatrix.falseNeg = this.doggos.reduce(countFalseNeg, 0);
+    this.confusionMatrix = {
+      truePos: this.doggos.reduce(countTruePos, 0),
+      trueNeg: this.doggos.reduce(countTrueNeg, 0),
+      falsePos: this.doggos.reduce(countFalsePos, 0),
+      falseNeg: this.doggos.reduce(countFalseNeg, 0),
+      matchTotal: this.matchCount(),
+      nonMatchTotal: 9 - this.matchCount()
+    }
     
-    this.getPredictions();
   }
 
   generateTiles() {

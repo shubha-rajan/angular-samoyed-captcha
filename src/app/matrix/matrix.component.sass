@@ -1,0 +1,42 @@
+.confusion-grid
+    display: grid
+    p
+        font-family:"Montserrat"
+
+    .actual
+        display: inline-block
+        margin-right: 10px
+        grid-row: 3/5
+        grid-column: 1
+    .guess
+        grid-row: 1
+        grid-column: 3/5
+    .guess-target
+        grid-row: 2/3
+        grid-column: 3/4
+    .guess-other
+        grid-row: 2/3
+        grid-column: 4/5
+    .actual-target
+        grid-row: 3/4
+        grid-column: 2/3
+        margin-right: 10px
+    .actual-other
+        grid-row: 4/5
+        grid-column: 2/3
+        margin-right: 10px
+.confusion-matrix  
+    grid-row: 3/5
+    grid-column: 3/5
+    margin: auto 0
+    div
+        display: inline-block
+        width: 40%
+        padding: 5%
+        font-family: helvetica
+
+.incorrect
+    background-color: yellow
+
+.correct
+    background-color: lightblue

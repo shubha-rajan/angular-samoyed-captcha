@@ -1,11 +1,17 @@
 .prediction-row
     display: grid
+    font-family: helvetica
     img
         grid-column: 1
-        height: 10vw
-        width: 10vw
-        margin: auto
+        height: 10vh
+        width: 10vh
+        margin: 10px auto
+    .guess
+        grid-column: 2
+        margin: auto 10px
     .conf-scores
-        grid-column: 2/3
-        font-family: helvetica
-        margin: 20px
+        grid-column: 3      
+        margin: auto 10px
+    .actual
+        grid-column: 4
+        margin: auto 10px

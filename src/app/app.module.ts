@@ -7,13 +7,17 @@ import { AppComponent } from './app.component';
 import { CaptchaTileComponent } from './captcha-tile/captcha-tile.component';
 import { CaptchaGridComponent } from './captcha-grid/captcha-grid.component';
 import { ImageResultComponent } from './image-result/image-result.component';
+import { MatrixComponent } from './matrix/matrix.component';
+import { ResultTableComponent } from './result-table/result-table.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CaptchaTileComponent,
     CaptchaGridComponent,
-    ImageResultComponent
+    ImageResultComponent,
+    MatrixComponent,
+    ResultTableComponent
   ],
   imports: [
     BrowserModule,

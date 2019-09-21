@@ -7,6 +7,8 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class ImageResultComponent implements OnInit {
   @Input() imageUrl: string;
+  @Input() guess: string;
+  @Input() actual: string;
   @Input() jamie: number;
   @Input() alice: number;
 

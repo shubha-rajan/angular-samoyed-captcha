@@ -1,0 +1,14 @@
+<h4 >Compare your guesses:</h4>
+<div class="result-header">
+        <h4 class="image">Image</h4> 
+        <h4 class="guess">Your Guess</h4> 
+        <h4 class="ml-guess">Model Guess</h4>
+        <h4 class="actual">Actual</h4>  
+</div>
+<app-image-result *ngFor="let prediction of predictions"
+    imageUrl = "{{prediction.url}}"
+    [jamie] = "prediction.jamie"
+    [alice] = "prediction.alice"
+    guess= {{prediction.guess}}
+    actual= {{prediction.actual}}
+></app-image-result>
