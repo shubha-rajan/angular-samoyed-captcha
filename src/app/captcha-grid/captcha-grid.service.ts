@@ -4,11 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 @Injectable()
 export class CaptchaGridService {
   constructor(private http: HttpClient) { }
-<<<<<<< HEAD
-  dataUrl = 'http://www.jamie-alice-classifier-251416.appspot.com/';
-=======
-  dataUrl = 'https://jamie-alice-classifier-251416.appspot.com/';
->>>>>>> d7afa89ca2f5513d6cc54b72cf6a3d1c8ed7f5ca
+  dataUrl = 'https://www.jamie-alice-classifier-251416.appspot.com/';
 
   getData() {
     return this.http.get(this.dataUrl + "");
