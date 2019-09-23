@@ -1,17 +1,31 @@
+.correct
+    background-color: lightgreen
+.incorrect
+    background-color: #FFBEBE
 .prediction-row
     display: grid
-    font-family: helvetica
+    grid-template-columns: repeat(4, 1fr)
+    font-family: "Montserrat"
+    font-size: .8rem
+    
     img
-        grid-column: 1
         height: 10vh
         width: 10vh
-        margin: 10px auto
+
+    .img-container
+        grid-column: 1
+        text-align: center
     .guess
         grid-column: 2
-        margin: auto 10px
+        text-align: center
     .conf-scores
         grid-column: 3      
-        margin: auto 10px
+        text-align: center
+        p.score
+            text-align: left
+
     .actual
         grid-column: 4
-        margin: auto 10px
+        text-align: center
+
+    

@@ -14,10 +14,20 @@ export class ImageResultComponent implements OnInit {
 
   jamieScore: number;
   aliceScore: number;
+  className: string;
+
+  setClassName() {
+    if (this.guess == this.actual){
+      this.className = "correct";
+    } else {
+      this.className = "incorrect";
+    }
+  }
 
   ngOnInit() {
     this.jamieScore = Math.round(this.jamie * 100);
     this.aliceScore = Math.round(this.alice * 100);
+    this.setClassName();
   }
 
 }

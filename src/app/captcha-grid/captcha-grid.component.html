@@ -1,5 +1,6 @@
 <section *ngIf="loadingComplete === true" class="captcha-grid" >
-    <p>Select all the photos that contain {{captchaData.targetDog}}.</p>
+    
+    <p>Select all the photos that contain <strong>{{captchaData.targetDog}}</strong>.</p>
     <app-captcha-tile 
         *ngFor='let doggo of doggos'
         imageUrl={{doggo.url}} 
@@ -13,35 +14,38 @@
     
     <div *ngIf="gameComplete === true">
         <p class="score">Your score: {{score}} out of 9</p>
-        <section *ngIf="!loadedModelMatrix" class="loading">
-                <h4> Loading model data.</h4>
-                <img class="loading-circle" src="assets/images/loading.gif">
-        </section>
-        
-        <h2 *ngIf="loadedModelMatrix === true">Compare yourself to our model: </h2>
-        <section *ngIf="loadedModelMatrix === true">
-            <h4>Your confusion matrix:</h4>
-                <app-matrix
-                    targetDog={{captchaData.targetDog}}
-                    otherDog={{otherDog()}}
-                    [matrix]="confusionMatrix"
-            ></app-matrix>
-        </section>
         
 
-        <section *ngIf="loadedModelMatrix === true">
-            <h4>Model confusion matrix:</h4>
-            <app-matrix
-                targetDog={{captchaData.targetDog}}
-                otherDog={{otherDog()}}
-                [matrix]="modelMatrix"
-            ></app-matrix>
-        </section>
+        <section>
+                <h2 *ngIf="loadedModelMatrix === true">Compare yourself to our model: </h2>
+                <section *ngIf="!loadedModelMatrix" class="loading">
+                        <h4> Loading model data.</h4>
+                        <img class="loading-circle" src="assets/images/loading.gif">
+                </section>
+                <section *ngIf="loadedModelMatrix === true">
+                    <h4>Your confusion matrix:</h4>
+                        <app-matrix
+                            targetDog={{captchaData.targetDog}}
+                            otherDog={{otherDog()}}
+                            [matrix]="confusionMatrix"
+                    ></app-matrix>
+                </section>
+                
         
-
-    <section *ngIf="predictions.length > 0" class = "model-predictions">
-        <app-result-table [predictions]="predictions"></app-result-table>
-    </section>
+                <section *ngIf="loadedModelMatrix === true">
+                    <h4>Model confusion matrix:</h4>
+                    <app-matrix
+                        targetDog={{captchaData.targetDog}}
+                        otherDog={{otherDog()}}
+                        [matrix]="modelMatrix"
+                    ></app-matrix>
+                </section>
+                
+        
+            <section *ngIf="predictions.length > 0 && loadedModelMatrix === true" class = "model-predictions">
+                <app-result-table [predictions]="predictions"></app-result-table>
+            </section> 
+        </section>
     </div>
 </section>
 

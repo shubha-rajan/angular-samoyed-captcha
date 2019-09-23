@@ -1,21 +1,30 @@
 <div>
     <header>
         <h1 class="title">Samoyed Captcha!</h1>
+        <nav>
+          <ul>
+            <li><a href="#about">About</a></li>
+            <li><a href="#train">Train</a></li>
+            <li><a href="#play">Play</a></li>
+          </ul>
+        </nav>
       </header>
       <main>
       <article>
-          <h2>Meet Alice and Jamie.</h2>
-          <img src="assets/images/AliceJamie.jpg">
+          <h2 id="about">Meet Alice and Jamie.</h2>
+          
           <p>
             Can you tell these two apart? The machine learning model we trained with <a href="https://cloud.google.com/automl">Google Cloud AutoML</a> can!
             Alice and Jamie's entire lives have been documented on camera by their dad, Doug. That's over 10 years worth of data that we were able to use to teach
             our model to tell these two apart! Our model was ultimately able to guess which dog is which with over 80% accuracy. Think you can do better? Try our 
             captcha game below!
           </p>
+          <img src="assets/images/AliceJamie.jpg" alt="Alice and Jamie Samoyed">
           <p>
               This project was built by <a href="https://www.github.com/dmahugh">Doug Mahugh</a> and <a href="https://www.github.com/shubha-rajan"> Shubha Rajan Arehalli</a>, who work as Developer Programs Engineers on the Google Cloud Storage and Database team.
             </p>
-            <h2>Train yourself!</h2>
+            <h2 id="train">Train yourself:</h2>
+            <p>Here are some pictures you can use to teach yourself how to recognize Alice and Jamie. When you're ready, you can try solving the captcha!</p>
             <div class="iframe-container">
                 <iframe 
                   src="https://docs.google.com/presentation/d/e/2PACX-1vShUnECTlRJ5M_8Bhp6iZV5Y99oD3pJK8JUSDPUGIF_3lSZCQSNALw9BqiTRbCaxHB0h58q0RSwwvYN/embed?start=false&loop=true&delayms=3000" 
@@ -25,13 +34,13 @@
                   webkitallowfullscreen="true">
                 </iframe>
             </div>
-            
-
+            <h2 id="play">Play Samoyed Captcha:</h2>
+            <p>Click on the images in the grid to select the correct Samoyed!</p>      
       </article>
-
-      
-        
       <app-captcha-grid></app-captcha-grid>
+     
+        
+      
       </main>
 </div>
 
