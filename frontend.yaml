@@ -5,8 +5,8 @@ threadsafe: yes
 handlers:
 
   - url: /
-    static_files: dist/index.html
-    upload: dist/index.html
+    static_files: dist/samoyed-captcha/index.html
+    upload: dist/samoyed-captcha/index.html
   - url: /
     static_dir: dist
 
